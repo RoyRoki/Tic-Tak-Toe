@@ -5,10 +5,11 @@ void printmaze(char arr[]){
 
 }
 
-int playerinput(int *ptr){
+int playerinput(int *ptr,int invalid){
     int input;
+    if(invalid==0){
     if(*ptr==1)*ptr=2;
-    else *ptr=1;
+    else *ptr=1;}
     if(*ptr==1) printf("[X]  "); else printf("[O]  ");
     printf("Player%d Turn -->", *ptr);
     scanf("%d",&input);
@@ -47,6 +48,7 @@ int main(){
     char arr[9];
     int user=2;
     int *ptr=&user;
+    int invalid=0;
     for(int i=0;i<9;i++){
         arr[i]=' ';
     }
@@ -54,13 +56,15 @@ int main(){
     printmaze(arr);
     
     for(int i=0; i<9;i++){
-    int num=playerinput(ptr);
+    
+    int num=playerinput(ptr,invalid);
 
     if(num==0 || arr[num-1]!=' ') {
-        printf("INvalide Input");
-        break;
-    }
-
+        printf("INvalide Input                       ");
+        invalid++;
+        i=i-1;
+    } else invalid=0;
+    if(invalid==0){
     updatemaze(user,num,arr);
     printmaze(arr);
 
@@ -70,6 +74,6 @@ int main(){
         if(chack==1 || chack==2) break;
     }
     }
-    
+    }
     return 0;
 }
